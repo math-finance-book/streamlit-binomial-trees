@@ -5,16 +5,7 @@ import plotly.graph_objects as go
 import plotly.io as pio
 import pandas as pd
 
-# Set up the Streamlit page
 st.set_page_config(page_title="Binomial Trees", layout="wide")
-# st.title("")
-
-
-##############################################
-#
-# COLORS
-#
-#############################################
 
 plotly_template = pio.templates["simple_white"]
 colors = plotly_template.layout.colorway
@@ -130,27 +121,19 @@ def figtbl(kind, S, K, r, u, n):
 
 
 
-col1, col2 = st.columns(2)
-with col1:
+with st.sidebar:
     option_type = st.radio("Option Type", ["Call", "Put"])
-with col2:    
     exercise_type = st.radio("Exercise Style", ["European", "American"])
-
-col1, col2, col3 = st.columns(3)
-with col1:
     S = st.number_input("Initial Stock Price ($)", min_value=1.0, value=100.0, step=1.0)
     K = st.number_input("Strike Price ($)", min_value=1.0, value=100.0, step=1.0)
-with col2:
     r = st.number_input("Interest Rate (%)", min_value=0.0, value=1.0, step=0.1)
     u = st.number_input("Up Step (%)", min_value=0.1, value=5.0, step=0.1)
-with col3:
     n = st.number_input("Number of Steps", min_value=1, value=3, step=1)
 
 kind = f"{exercise_type} {option_type.lower()}"
 tree = stockTree(S, 1 + u/100, n)
 fig_stock = treePlot(tree, kind="stock")
 fig_stock.update_yaxes(title="Underlying Price")
-fig_stock.update_layout(title_text="Underlying Tree")
 
 Tree = europeanTree if exercise_type == "European" else americanTree
 tree, prob = Tree(S, K, r/100, 1 + u/100, n, option_type.lower())
@@ -159,7 +142,6 @@ fig_option = treePlot(tree, kind="option")
 if option_type.lower() == "put":
     fig_option.update_yaxes(autorange="reversed")
 fig_option.update_yaxes(title=kind.title() + " Value")
-fig_option.update_layout(title_text=kind.title()+" Tree")
 
 col1, col2 = st.columns(2)
 
@@ -169,7 +151,6 @@ with col1:
 with col2:
     st.plotly_chart(fig_option, use_container_width=True)
 
-# Move these outside the columns
 st.write(f"{kind} value at date 0: ${value:.2f}")
 st.write(f"Risk-neutral probability: {prob:.1%}")
 
