@@ -123,16 +123,13 @@ def figtbl(kind, S, K, r, u, n):
 
 # Top control area
 with st.container():
-    col1, col2, col3 = st.columns(3)
+    col0, col1, col2, col3 = st.columns(4)
     
+    with col0:
+        option_type = st.radio("Option Type", ["Call", "Put"])
     with col1:
-        subcol1, subcol2 = st.columns(2)
-        with subcol1:
-            option_type = st.radio("Option Type", ["Call", "Put"])
-        with subcol2:
-            exercise_type = st.radio("Exercise Style", ["European", "American"])
-        n = st.number_input("Number of Steps", min_value=1, value=3, step=1)
-    
+        exercise_type = st.radio("Exercise Style", ["European", "American"])
+        
     with col2:
         S = st.number_input("Initial Stock Price ($)", min_value=1.0, value=100.0, step=1.0)
         K = st.number_input("Strike Price ($)", min_value=1.0, value=100.0, step=1.0)
@@ -141,6 +138,9 @@ with st.container():
         r = st.number_input("Interest Rate (%)", min_value=0.0, value=1.0, step=0.1)
         u = st.number_input("Up Step (%)", min_value=0.1, value=5.0, step=0.1)
     
+    col1, col2, col3 = st.columns(3)
+    with col2:
+        n = st.number_input("Number of Steps", min_value=1, value=3, step=1)
 
 kind = f"{exercise_type} {option_type.lower()}"
 tree = stockTree(S, 1 + u/100, n)
