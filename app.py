@@ -7,6 +7,29 @@ import pandas as pd
 
 st.set_page_config(page_title="Binomial Trees", layout="wide")
 
+# CSS for responsive iframe scaling
+st.markdown("""
+<style>
+/* Make the entire app responsive */
+.main .block-container {
+    max-width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+/* Scale content to fit iframe */
+.stApp {
+    transform-origin: top left;
+    width: 100%;
+}
+
+/* Ensure plots scale properly */
+.js-plotly-plot {
+    width: 100% !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 plotly_template = pio.templates["simple_white"]
 colors = plotly_template.layout.colorway
 blue, red, green, purple, orange = colors[:5]
