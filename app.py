@@ -126,8 +126,11 @@ with st.container():
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        option_type = st.radio("Option Type", ["Call", "Put"])
-        exercise_type = st.radio("Exercise Style", ["European", "American"])
+        subcol1, subcol2 = st.columns(2)
+        with subcol1:
+            option_type = st.radio("Option Type", ["Call", "Put"])
+        with subcol2:
+            exercise_type = st.radio("Exercise Style", ["European", "American"])
     
     with col2:
         S = st.number_input("Initial Stock Price ($)", min_value=1.0, value=100.0, step=1.0)
