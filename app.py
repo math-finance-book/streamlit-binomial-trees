@@ -131,6 +131,7 @@ with st.container():
             option_type = st.radio("Option Type", ["Call", "Put"])
         with subcol2:
             exercise_type = st.radio("Exercise Style", ["European", "American"])
+        n = st.number_input("Number of Steps", min_value=1, value=3, step=1)
     
     with col2:
         S = st.number_input("Initial Stock Price ($)", min_value=1.0, value=100.0, step=1.0)
@@ -139,7 +140,6 @@ with st.container():
     with col3:
         r = st.number_input("Interest Rate (%)", min_value=0.0, value=1.0, step=0.1)
         u = st.number_input("Up Step (%)", min_value=0.1, value=5.0, step=0.1)
-        n = st.number_input("Number of Steps", min_value=1, value=3, step=1)
     
 
 kind = f"{exercise_type} {option_type.lower()}"
