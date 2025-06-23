@@ -121,20 +121,8 @@ def figtbl(kind, S, K, r, u, n):
 
 
 
-# Top control area with shaded background
+# Top control area
 with st.container():
-    st.markdown("""
-        <style>
-        .control-area {
-            background-color: #f0f2f6;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        </style>
-        <div class="control-area">
-        """, unsafe_allow_html=True)
-    
     col1, col2, col3 = st.columns(3)
     
     with col1:
@@ -150,7 +138,6 @@ with st.container():
         u = st.number_input("Up Step (%)", min_value=0.1, value=5.0, step=0.1)
         n = st.number_input("Number of Steps", min_value=1, value=3, step=1)
     
-    st.markdown("</div>", unsafe_allow_html=True)
 
 kind = f"{exercise_type} {option_type.lower()}"
 tree = stockTree(S, 1 + u/100, n)
